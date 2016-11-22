@@ -5,13 +5,14 @@ namespace BinaryTree
     /// <summary>
     /// A (simple?) binary tree implementation in C#.
     /// </summary>
-    class Node
+    public class Node
     {
         public int weight;
         long size;
         public Node left;
         public Node right;
         public static Random rnd = new Random();
+        public static int hits = 0;
 
         /// <summary>
         /// Creates the node using the initial weight value passed to it.
@@ -65,6 +66,10 @@ namespace BinaryTree
                 FixSize(left);
                 node = left;
             }
+            else
+            {
+                node = null;
+            }
         }
 
         /// <summary>
@@ -82,6 +87,10 @@ namespace BinaryTree
                 FixSize(node);
                 FixSize(right);
                 node = right;
+            }
+            else
+            {
+                node = null;
             }
         }
 
@@ -150,6 +159,7 @@ namespace BinaryTree
             }
             else if (rnd.Next() % (node.size + 1) == 0)
             {
+                hits++;
                 InsertRoot(ref node, weight);
             }
             else if (node.weight > weight)
