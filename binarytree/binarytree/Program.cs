@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BinaryTree
 {
@@ -10,14 +6,14 @@ namespace BinaryTree
     {
         public static void Main(string[] args)
         {
-            Node test = new Node(0);
+            Node testBinaryTree = new Node(0);
             for (int i = 1, count = (int)(Math.Pow(2, 12)) - 1; i < count; i++)
             {
-                Node.Insert(ref test, i);
+                Node.RandomInsert(ref testBinaryTree, i);
             }
-            long totalWeight = Node.GetTotalWeight(test);
-            Node largestSubtree = Node.FindLargestSubtree(test);
-            int hits = Node.hits;
+            long totalWeight = Node.GetTotalWeight(testBinaryTree);
+            Node largestSubtree = Node.FindLargestSubtree(testBinaryTree);
+            Node foundNode = Node.Find(testBinaryTree, 16);
         }
     }
 }

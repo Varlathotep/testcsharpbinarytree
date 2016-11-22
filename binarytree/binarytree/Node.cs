@@ -12,7 +12,6 @@ namespace BinaryTree
         public Node left;
         public Node right;
         public static Random rnd = new Random();
-        public static int hits = 0;
 
         /// <summary>
         /// Creates the node using the initial weight value passed to it.
@@ -24,6 +23,56 @@ namespace BinaryTree
             size = 1;
             left = null;
             right = null;
+        }
+
+        /// <summary>
+        /// Inserts the node containing the weight.
+        /// </summary>
+        /// <param name="node">The node to be inserted into.</param>
+        /// <param name="weight">The weight of the node being inserted.</param>
+        /// <returns></returns>
+        public static void Insert(ref Node node, int weight)
+        {
+            if (node == null)
+            {
+                node = new Node(weight);
+            }
+            else if (node.weight > weight)
+            {
+                Insert(ref node.left, weight);
+            }
+            else
+            {
+                Insert(ref node.right, weight);
+            }
+            FixSize(node);
+        }
+
+        /// <summary>
+        /// Inserts the node containing the weight.
+        /// </summary>
+        /// <param name="node">The node to be inserted into.</param>
+        /// <param name="weight">The weight of the node being inserted.</param>
+        /// <returns></returns>
+        public static void RandomInsert(ref Node node, int weight)
+        {
+            if (node == null)
+            {
+                node = new Node(weight);
+            }
+            else if (rnd.Next() % (node.size + 1) == 0)
+            {
+                InsertRoot(ref node, weight);
+            }
+            else if (node.weight > weight)
+            {
+                RandomInsert(ref node.left, weight);
+            }
+            else
+            {
+                RandomInsert(ref node.right, weight);
+            }
+            FixSize(node);
         }
 
         /// <summary>
@@ -95,6 +144,40 @@ namespace BinaryTree
         }
 
         /// <summary>
+        /// Sets the size of the node.
+        /// </summary>
+        /// <param name="size">The size property.</param>
+        public static void SetSize(ref Node node, long size)
+        {
+            node.size = size;
+        }
+
+        /// <summary>
+        /// Returns the provided node's size, or 0 if the node is null.
+        /// </summary>
+        /// <param name="node">The node having its size checked.</param>
+        /// <returns>The size of the node.</returns>
+        public static long GetSize(ref Node node)
+        {
+            long size = 0;
+            if (node is Node)
+            {
+                size = node.size;
+            }
+            return size;
+        }
+
+        /// <summary>
+        /// (Should) corrects the size of the binary tree.
+        /// </summary>
+        /// <param name="node">The node having its size corrected.</param>
+        public static void FixSize(Node node)
+        {
+            long newSize = 1 + GetSize(ref node.left) + GetSize(ref node.right);
+            Node.SetSize(ref node, newSize);
+        }
+
+        /// <summary>
         /// Finds the largest subtree by getting the total weight of both the left and right branches and then comparing the total weight of both branches against each other.
         /// </summary>
         /// <param name="node">The node to be searched.</param>
@@ -146,59 +229,6 @@ namespace BinaryTree
         }
 
         /// <summary>
-        /// Inserts the node containing the weight.
-        /// </summary>
-        /// <param name="node">The node to be inserted into.</param>
-        /// <param name="weight">The weight of the node being inserted.</param>
-        /// <returns></returns>
-        public static void Insert(ref Node node, int weight)
-        {
-            if (node == null)
-            {
-                node = new Node(weight);
-            }
-            else if (rnd.Next() % (node.size + 1) == 0)
-            {
-                hits++;
-                InsertRoot(ref node, weight);
-            }
-            else if (node.weight > weight)
-            {
-                Insert(ref node.left, weight);
-            }
-            else
-            {
-                Insert(ref node.right, weight);
-            }
-            FixSize(node);
-        }
-
-        /// <summary>
-        /// (Should) corrects the size of the binary tree.
-        /// </summary>
-        /// <param name="node">The node having its size corrected.</param>
-        public static void FixSize(Node node)
-        {
-            long newSize = 1 + GetSize(node.left) + GetSize(node.right);
-            Node.SetSize(node, newSize);
-        }
-
-        /// <summary>
-        /// Returns the provided node's size, or 0 if the node is null.
-        /// </summary>
-        /// <param name="node">The node having its size checked.</param>
-        /// <returns>The size of the node.</returns>
-        public static long GetSize(Node node)
-        {
-            long size = 0;
-            if (node is Node)
-            {
-                size = node.size;
-            }
-            return size;
-        }
-
-        /// <summary>
         /// Recursively calculates the total weight of the subtree starting at the provided node.
         /// </summary>
         /// <param name="node">The starting node of the calculation.</param>
@@ -219,15 +249,6 @@ namespace BinaryTree
                 }
             }
             return weight;
-        }
-
-        /// <summary>
-        /// Sets the size of the node.
-        /// </summary>
-        /// <param name="size">The size property.</param>
-        public static void SetSize(Node node, long size)
-        {
-            node.size = size;
         }
     }
 }
