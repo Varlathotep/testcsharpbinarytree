@@ -31,7 +31,7 @@ namespace BinaryTree
         /// <param name="node">The node to be inserted into.</param>
         /// <param name="weight">The weight of the new node.</param>
         /// <returns>The newly rotated node.</returns>
-        public static Node InsertRoot(ref Node node, int weight)
+        public static void InsertRoot(ref Node node, int weight)
         {
             if (node == null)
             {
@@ -47,7 +47,6 @@ namespace BinaryTree
                 InsertRoot(ref node.right, weight);
                 RotateLeft(ref node);
             }
-            return node;
         }
 
         /// <summary>
@@ -55,9 +54,8 @@ namespace BinaryTree
         /// </summary>
         /// <param name="node">The subtree to be rotated.</param>
         /// <returns>The newly rotated subtree.</returns>
-        public static Node RotateRight(ref Node node)
+        public static void RotateRight(ref Node node)
         {
-            Node returned = node;
             Node left = node.left;
             if (left is Node)
             {
@@ -67,7 +65,6 @@ namespace BinaryTree
                 FixSize(left);
                 node = left;
             }
-            return returned;
         }
 
         /// <summary>
@@ -75,9 +72,8 @@ namespace BinaryTree
         /// </summary>
         /// <param name="node">The subtree to be rotated.</param>
         /// <returns>The newly rotated subtree.</returns>
-        public static Node RotateLeft(ref Node node)
+        public static void RotateLeft(ref Node node)
         {
-            Node returned = node;
             Node right = node.right;
             if (right is Node)
             {
@@ -87,7 +83,6 @@ namespace BinaryTree
                 FixSize(right);
                 node = right;
             }
-            return returned;
         }
 
         /// <summary>
@@ -147,7 +142,7 @@ namespace BinaryTree
         /// <param name="node">The node to be inserted into.</param>
         /// <param name="weight">The weight of the node being inserted.</param>
         /// <returns></returns>
-        public static Node Insert(ref Node node, int weight)
+        public static void Insert(ref Node node, int weight)
         {
             if (node == null)
             {
@@ -166,7 +161,6 @@ namespace BinaryTree
                 Insert(ref node.right, weight);
             }
             FixSize(node);
-            return node;
         }
 
         /// <summary>
